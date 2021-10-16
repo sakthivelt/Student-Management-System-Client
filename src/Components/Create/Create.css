@@ -1,0 +1,11 @@
+.create__main{
+    
+    padding: 20px 20px;
+    margin-top: -15px;
+    width: 100%;
+    height: 84vh;
+    border-radius: 30px;
+    box-shadow: -1px 7px 48px -8px rgba(0,0,0,0.56);
+    -webkit-box-shadow: -1px 7px 48px -8px rgba(0,0,0,0.56);
+    -moz-box-shadow: -1px 7px 48px -8px rgba(0,0,0,0.56);
+}
