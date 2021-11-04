@@ -1,11 +1,32 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import axios from 'axios'
 
 export default function ComboBox({selector,lableName,setitem,dvalue}) {
-const [InputValue, setInputValue] = useState(dvalue)
+        const [InputValue, setInputValue] = useState(dvalue)
+        const [SubC,setSubC] =useState([]) 
+        const [SubN,setSubN]=useState([])
 
-  return (
+        function getdata(){
+          axios.get(`${process.env.REACT_APP_UNSPLASH_URL}/ListSetting`).then((item)=>{
+            console.log(item)
+              let data=item.data.map((i)=>{
+                  return i.SUBNAME
+              })
+              setSubN(data)
+              data=item.data.map((i)=>{
+                return i.SUBCODE
+              })
+              setSubC(data)
+            }).catch(error=>{console.log(error)})
+        }
+        useEffect(()=>{
+          getdata()
+        },[])
+
+
+return (
     <Autocomplete
     onChange={(event, newValue) => {
       newValue===false?setitem(''):setitem(newValue!==null&&newValue.toUpperCase())
@@ -21,15 +42,3 @@ const [InputValue, setInputValue] = useState(dvalue)
   );
 }
 
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
-const SubC = [
-   'FTAM',
-  'FEN',
-  'SAT'
-];
-
-const SubN=[
-    "TAMIL",
-    "ENGLISH",
-    "MATHS" 
-]

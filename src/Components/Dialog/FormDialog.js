@@ -28,6 +28,12 @@ export default function FormDialog({DialogStatus,setDialogStatus,SemesterN,Degre
   const [Attempt4Status, setAttempt4Status] = useState(true)
   const [Attempt5Status, setAttempt5Status] = useState(true)
   const [Attempt6Status, setAttempt6Status] = useState(true)
+  const [Attempt1Date, setAttempt1Date] = useState('')
+  const [Attempt2Date, setAttempt2Date] = useState('')
+  const [Attempt3Date, setAttempt3Date] = useState('')
+  const [Attempt4Date, setAttempt4Date] = useState('')
+  const [Attempt5Date, setAttempt5Date] = useState('')
+  const [Attempt6Date, setAttempt6Date] = useState('')
 
   console.log(SubCode," ",SubName)
 

@@ -20,11 +20,15 @@ import AddIcon from '@material-ui/icons/Add';
 import { ListItemIcon } from '@material-ui/core';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import BookIcon from '@material-ui/icons/Book';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { Route,Switch,Link } from 'react-router-dom';
 //components
 import Create from '../Components/Create/Create'
-import Profile from '../Components/Profile/Profile'
-import StudentProfile from '../Components/StudentProfile/StudentProfile';
+import ProfileUpdate from '../Components/ProfileUpdate/ProfileUpdate'
+import StudentList from '../Components/StudentProfile/StudentList';
+import Profile from '../Components/StudentProfile/Profile/Profile';
+import Setting from '../Components/Setting/Setting'
+import StepperUpdate from '../Components/StepperUpdate/StepperUpdate'
 
 const drawerWidth = 240;
 
@@ -149,7 +153,7 @@ export default function MiniDrawer() {
         </div>
         <Divider />
         <List>
-          {[{value:"Create User",icon:<AddIcon/>,url:'/Create'},{value:"View Users",icon:<ListAltIcon/>,url:'/Profile'},{value:"Book Status",icon:<BookIcon/>,url:'/Status'}].map((text, index) => (
+          {[{value:"Create User",icon:<AddIcon/>,url:'/'},{value:"View Users",icon:<ListAltIcon/>,url:'/StudentList'},{value:"Settings",icon:<SettingsIcon/>,url:'/Settings'}].map((text, index) => (
           <Link key={index} to={text.url}  style={{ color: 'gray',textDecoration:'none' }}>
             <ListItem button key={text.value} onClick={handleDrawerClose}>
               <ListItemIcon>{text.icon}</ListItemIcon>
@@ -172,9 +176,16 @@ export default function MiniDrawer() {
         <div className={classes.toolbar} />
         <div className="main__render">
           <Switch>
-            <Route path='/Create' exect component={Create}/>
-            <Route path='/Profile/Update/:RegNo/:Degree' exect component={Profile}/>
-            <Route path='/Profile' exect component={StudentProfile}/>
+            <Route path='/' exact component={Create}/>
+            <Route path='/Profiles/:RegNo' exect component={Profile}/>
+            <Route path='/Profile/Update/:RegNo/:Degree' exect component={ProfileUpdate}/>
+            <Route path='/StudentList' exect component={StudentList}/>
+            <Route path='/Settings' exect component={Setting}/>
+            <Route path={`/Profile/:RegNo/Update`} exact>
+                    <div className='stepperUpdate'>
+                    <StepperUpdate/>
+                    </div>
+            </Route>
           </Switch>
         </div>
       </main>

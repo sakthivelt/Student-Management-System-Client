@@ -1,0 +1,45 @@
+.SttingList{
+    display: flex;
+    width: 90%;
+    height: 50px;
+    margin: 25px auto;
+    border: black 1px;
+    box-shadow: -9px -5px 29px -7px rgba(0,0,0,0.44);
+    -webkit-box-shadow: -9px -5px 29px -7px rgba(0,0,0,0.44);
+    -moz-box-shadow: -9px -5px 29px -7px rgba(0,0,0,0.44);
+    /* remove the higlights while click the div on mibile */
+    -webkit-tap-highlight-color: transparent;
+    border-radius: 20px;    
+    transition: 0.3s ease-in-out;
+
+}
+.SttingList:hover{
+    box-shadow: -1px 7px 48px -8px rgba(0,0,0,0.56);
+    -webkit-box-shadow: -1px 7px 48px -8px rgba(0,0,0,0.56);
+    -moz-box-shadow: -1px 7px 48px -8px rgba(0,0,0,0.56);
+}
+
+.SttingList>div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.SttingList>div:nth-child(1){
+    width: 50%;
+    height: 100%;
+    border-right: 1px lightgray solid;
+}
+
+.SttingList>div:nth-child(2){
+    width: 40%;
+    height: 100%;
+    border-right: 1px lightgray solid;
+
+}
+
+.SttingList>div:nth-child(3){
+    width: 10%;
+    height: 100%;
+    cursor: pointer;
+}
