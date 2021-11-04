@@ -1,5 +1,5 @@
 import React from 'react';
-import './Stepper.css'
+import './StepperUpdate.css'
 import Warning from '../Lottie/Warning/Warning';
 import Success from "../Lottie/Success/Success";
 import Loader from "../Lottie/Loader/Loader"
@@ -70,7 +70,7 @@ function getSteps() {
 }
 
 
-export default function HorizontalLinearStepper() {
+export default function StepperUpdate() {
 
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
