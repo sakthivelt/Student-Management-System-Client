@@ -82,7 +82,7 @@ export default function UpdateSem({ID,Maindata,DialogStatus,setDialogStatus,Seme
 
   function Submit(){
     handleClose();
-      axios.put(`http://localhost:5000/Profile/${SemesterN}/Update`,{
+      axios.put(`${process.env.REACT_APP_UNSPLASH_URL}/Profile/${SemesterN}/Update`,{
         _id:ID,
         RegNo:RegNo.toUpperCase(),
         SubCode:SubCode,

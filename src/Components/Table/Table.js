@@ -30,7 +30,7 @@ export default function BasicTable({Degree,RegNo,SemesterN,callGetData,setSemest
   // ];
 
   function getData(){
-    axios.get('http://localhost:5000/getinfo/'+RegNo.toUpperCase()
+    axios.get(`${process.env.REACT_APP_UNSPLASH_URL}/getinfo/`+RegNo.toUpperCase()
     ).then((data)=>{
       console.log(data)
       setMaindata(data)

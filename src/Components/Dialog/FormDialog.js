@@ -53,7 +53,7 @@ export default function FormDialog({DialogStatus,setDialogStatus,SemesterN,Degre
 
   function Submit(){
     handleClose();
-      axios.put(`http://localhost:5000/Profile/${SemesterN}`,{
+      axios.put(`${process.env.REACT_APP_UNSPLASH_URL}/Profile/${SemesterN}`,{
         RegNo:RegNo.toUpperCase(),
         SubCode:SubCode,
         SubName:SubName,
