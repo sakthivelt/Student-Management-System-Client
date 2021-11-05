@@ -103,6 +103,8 @@ export default function HorizontalLinearStepper() {
   const [Animation,setAnimation]=useState(false)
   const [serverStatus,setServerStatus]=useState(true)
 
+  console.log(ImageRef.fullPath)
+
   function datefun(){
     console.log(new Date())
     console.log(format(new Date,'dd/MM/yyyy'))
@@ -263,10 +265,11 @@ function onChangeImage(e){
 }
 
 function deleteImage(){
-  setImageURL('')
   if(ImageRef){
     var deleteRef=ImageRef.delete().then(()=>{
       setImage("");
+      setImageRef('')
+      setImageURL('')
     }).catch((error)=>{console.log(error)})
   }
   
@@ -300,12 +303,13 @@ function FormSubmit(){
       BloodGroup:BloodGroup.toUpperCase(),
       PermenentAddress:PermenentAddress.toUpperCase(),
       ImageURL,
+      ImageRef:ImageRef.fullPath,
               }).then((res)=>{
                 console.log(res )
                 setTimeout(()=>{
                   setOldUser(res.data.OldUser)
                   setAnimation(false)
-                },[3000])
+                },[2000])
                 
               }).catch(()=>{
                 alert('error')

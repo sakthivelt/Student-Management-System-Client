@@ -1,6 +1,6 @@
 import React,{useState} from'react'
 import './ProfileUpdate.css'
-import { useParams,useHistory } from 'react-router-dom';
+import { useParams,useHistory,Link } from 'react-router-dom';
 import axios from 'axios';
 //component
 import FormDialog from '../Dialog/FormDialog'
@@ -17,7 +17,7 @@ import PrintIcon from '@material-ui/icons/Print';
 import ShareIcon from '@material-ui/icons/Share';
 import RemoveIcon from '@material-ui/icons/Remove';
 import Button from '@mui/material/Button';
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 function ProfileUpdate() {
     const Params=useParams()
@@ -75,6 +75,11 @@ const actions = [
 
     return (
         <div className="profile__wraper" >
+            <Link to={`/Profiles/${RegNo}`}>
+            <div className='Back__button'>
+            <ArrowBackIcon/> 
+            </div>
+            </Link>
     <div style={{width:"89%"}}>
         {Semester1&&<><h2 style={{textAlign:"center"}} onClick={()=>{SemesterOneInupt("Semester1")}}>Semester 1</h2><BasicTable callGetData={callGetData} Degree={Degree} RegNo={RegNo} SemesterN={"Semester1"} setSemesterN={setSemester1}/></>}
         {Semester2&&<><h2 style={{textAlign:"center"}} onClick={()=>{SemesterOneInupt("Semester2")}}>Semester 2</h2><BasicTable callGetData={callGetData} Degree={Degree} RegNo={RegNo} SemesterN={"Semester2"} setSemesterN={setSemester2}/></>}
