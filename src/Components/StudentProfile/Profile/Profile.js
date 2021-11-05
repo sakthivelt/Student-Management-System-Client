@@ -73,7 +73,7 @@ function Profile() {
                     <div className='bottom' data-aos='flip-down'>
                         <Tooltip title="View" placement='top'><div className={Active1&&'active'} onClick={()=>{setActiveFun(1)}} ><Link to={`/Profiles/${RegNo}`} ><PersonIcon style={{width:'40px',height:"40px",color:"black"}}/></Link></div></Tooltip>
                         <Tooltip title="Semesters list" placement='top'><div className={Active2&&'active'} onClick={()=>{setActiveFun(2)}}><Link to={`/Profiles/${RegNo}/Sem`} ><ClearAllIcon style={{marginTop:"2px",width:'40px',height:"40px",color:'black'}}/></Link></div></Tooltip>
-                        <Tooltip title="Edite" placement='top'><div className={Active3&&'active'} onClick={()=>{setActiveFun(3)}}><Link to={`/Profile/${UserData._id}/Update`}><EditIcon style={{marginTop:"2px",width:'35px',height:"35px",color:'black'}}/></Link></div></Tooltip>
+                        <Tooltip title="Edite" placement='top'><div className={Active3&&'active'} onClick={()=>{setActiveFun(3)}}><Link to={`/Profile/${UserData._id}/${RegNo}/Update`}><EditIcon style={{marginTop:"2px",width:'35px',height:"35px",color:'black'}}/></Link></div></Tooltip>
                     </div>
             </div>
             

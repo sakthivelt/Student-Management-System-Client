@@ -6,7 +6,7 @@ import DatePicker from '@mui/lab/DatePicker';
 import { isValid} from 'date-fns';
 
 export default function ResponsiveDatePicker({setDate,defaultValue}) {
-  const [value, setValue] = React.useState(defaultValue?defaultValue:new Date());
+  const [value, setValue] = React.useState(defaultValue?new Date(defaultValue):new Date());
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} >

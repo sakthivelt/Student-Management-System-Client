@@ -12,12 +12,13 @@ import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 import {Link} from 'react-router-dom'
 import { format, compareAsc } from 'date-fns'
+import {useParams} from 'react-router-dom';
 //material ui components
 import TextField from '@material-ui/core/TextField';
 import Avatar from '@material-ui/core/Avatar';
 import PersonIcon from '@material-ui/icons/Person';
 import CheckIcon from '@material-ui/icons/Check';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import Tooltip from '@material-ui/core/Tooltip';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -28,7 +29,7 @@ import ResponsiveDatePicker from '../ResponsiveDatePicker/ResponsiveDatePicker';
 //firebase
 import  {storage} from '../../FireBase/FireBase'
 console.log(storage)
-
+// var ref=storage.ref
 
 
 const useStyles = makeStyles((theme) => ({
@@ -72,11 +73,14 @@ function getSteps() {
 
 export default function StepperUpdate() {
 
+  const ID=useParams().ID
+  console.log(ID)
+  const TempRegNO=useParams().RegNo;
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
-  const Courses=['Tamil',"English","Maths",'Physics',"Computer Science","commerce"]
+  const Courses=['Tamil'.toUpperCase(),"English".toUpperCase(),"Maths".toUpperCase(),'Physics'.toUpperCase(),"Computer Science".toUpperCase(),"commerce".toUpperCase()]
   //valuse for main
   const [Name, setName] = useState('');
   const [RegNo, setRegNo] = useState('');
@@ -102,6 +106,45 @@ export default function StepperUpdate() {
   const [OldUser,setOldUser]=useState(true)
   const [Animation,setAnimation]=useState(false)
   const [serverStatus,setServerStatus]=useState(true)
+
+//Update section start
+  //Data
+  const [UserData, setUserData] = useState([])
+  function getUserData(){
+    axios.get(`${process.env.REACT_APP_UNSPLASH_URL}/getinfo/${TempRegNO}`).then((item)=>{
+      setUserData(item.data[0])
+      console.log(item.data[0])
+      setValuesfun(item.data[0])
+  }).catch(error=>console.log(error))
+  }
+  function setValuesfun(data){
+    setName(data.Name&&data.Name)
+    setRegNo(data.RegNo&&data.RegNo)
+    setDegree(data.Degree&&data.Degree)
+    setCourse(data.Course&&data.Course)
+    setDOB(data.DOB?new Date(data.DOB):new Date())
+    setPeriodOfStudy(data.PeriodOfStudy&&data.PeriodOfStudy)
+    setGender(data.Gender&&data.Gender)
+    setFatherName(data.FatherName&&data.FatherName)
+    setMotherName(data.MotherName&&data.MotherName)
+    setAadharCardNo(data.AadharCardNo&&data.AadharCardNo)
+    setVoterIdNumber(data.VoterIdNumber&&data.VoterIdNumber)
+    setCellNo(data.CellNo&&data.CellNo)
+    setEmailId(data.EmailId&&data.EmailId)
+    setNationality(data.Nationality&&data.Nationality)
+    setReligion(data.Religion&&data.Religion)
+    setCommunity(data.Community&&data.Community)
+    setBloodGroup(data.BloodGroup&&data.BloodGroup)
+    setPermenentAddress(data.PermenentAddress&&data.PermenentAddress)
+    setImageURL(data.ImageURL&&data.ImageURL)
+    setImageRef(data.ImageRef&&data.ImageRef)
+  }
+  useEffect(()=>{
+    getUserData()
+  },[])
+//Update section end
+
+
 
   function datefun(){
     console.log(new Date())
@@ -165,15 +208,15 @@ function getStepContent(step) {
                     onChange={handleChange}
                   >
                     <MenuItem value={''}>None</MenuItem>
-                    <MenuItem value={"Male"}>Male</MenuItem>
-                    <MenuItem value={"Female"}>Female</MenuItem>
+                    <MenuItem value={"Male".toUpperCase()}>Male</MenuItem>
+                    <MenuItem value={"Female".toUpperCase()}>Female</MenuItem>
                   </Select>
                 </FormControl>
                 </div>
                 <TextField style={{margin:'20px 60px'}} value={FatherName} onChange={(e)=>{setFatherName(e.target.value)}} id="standard-basic" label="Father Name"/>
                 <TextField style={{margin:'20px 60px'}} value={MotherName} onChange={(e)=>{setMotherName(e.target.value)}} id="standard-basic" label="Mother Name"/>
                 <div  style={{margin:'20px 60px'}}>
-               <ResponsiveDatePicker setDate={setDOB}/>
+               <ResponsiveDatePicker setDate={setDOB} defaultValue={DOB}/>
               </div>
 
             </div>
@@ -195,7 +238,7 @@ function getStepContent(step) {
 
                <div style={{width:'20%',height:'100%',background:'white',display:'flex',flexDirection:'column',justifyContent:"center",alignItems:'center'}}>
               
-               <Tooltip title={Image?<span onClick={()=>{deleteImage()}} style={{cursor:'pointer'}}>Cancen Image</span>:"Upload Image"} interactive>
+               <Tooltip title={ImageURL?<span onClick={()=>{deleteImage()}} style={{cursor:'pointer'}}>Cancen Image</span>:"Upload Image"} interactive>
                <div>
                <input
                 accept="image/*"
@@ -209,8 +252,8 @@ function getStepContent(step) {
                <label htmlFor="contained-button-file">
                <div style={{display:"flex"}}>
                <CircularProgress variant="determinate" thickness={0.5} value={progress} style={{position:'absolute',zIndex:'1',width:"150px",height:"150px",cursor:'pointer'}}/>
-              <Avatar alt="Remy Sharp" src={Image&&Image} className={`${classes.small} photo__avater`} style={{width:"150px",height:"150px",background:'white',color:'gray'}}>
-                {Image?<CheckIcon style={{width:"100px",height:"100px"}}/>:<PersonIcon style={{width:"100px",height:"100px"}}/>}
+              <Avatar alt="Remy Sharp" src={ImageURL&&ImageURL} className={`${classes.small} photo__avater`} style={{width:"150px",height:"150px",background:'white',color:'gray'}}>
+                {ImageURL?<CheckIcon style={{width:"100px",height:"100px"}}/>:<PersonIcon style={{width:"100px",height:"100px"}}/>}
               </Avatar>
               </div>
               </label>
@@ -263,10 +306,11 @@ function onChangeImage(e){
 }
 
 function deleteImage(){
-  setImageURL('')
   if(ImageRef){
-    var deleteRef=ImageRef.delete().then(()=>{
+    var ref=storage.ref(ImageRef)
+    var deleteRef=ref.delete().then(()=>{
       setImage("");
+      setImageURL('')
     }).catch((error)=>{console.log(error)})
   }
   
@@ -280,7 +324,7 @@ function FormSubmit(){
   }else{
     console.log("right")
     setAnimation(true)
-    axios.post("http://localhost:5000/Create",{
+    axios.put(`${process.env.REACT_APP_UNSPLASH_URL}/Update/${ID}`,{
       RegNo:RegNo.toUpperCase(),
       Name:Name.toUpperCase(),
       DOB,
@@ -305,7 +349,7 @@ function FormSubmit(){
                 setTimeout(()=>{
                   setOldUser(res.data.OldUser)
                   setAnimation(false)
-                },[3000])
+                },[2000])
                 
               }).catch(()=>{
                 alert('error')
@@ -412,9 +456,6 @@ function FormSubmit(){
               {(RegNo==='')&&<h2>Please fill out the Required feilds</h2>}
               {/* {Animation?<h1>"LOading..."</h1>:"Result"} */}
             </div>
-            <Button onClick={handleReset} color='primary'variant="contained" className={classes.button}>
-              Next Student
-            </Button>
             {Animation===false&&(!Animation&&OldUser===true||RegNo===''?<Button onClick={handleReEdite} className={classes.button}>Re Edite</Button>:<Link to={`/Profiles/${RegNo.toUpperCase()}`}><Button className={classes.button}>View Profile</Button></Link>)}
           </div>
         ) : (
@@ -433,6 +474,13 @@ function FormSubmit(){
               >
                 {activeStep === steps.length - 1 ?<span onClick={()=>{FormSubmit()}}>Finish</span>: 'Next'}
               </Button>
+              <Link to={`/Profiles/${TempRegNO}`} style={{textDecoration: 'none'}}>
+              <Button 
+               variant="contained"
+               color="primary"
+               className={classes.button}
+               >Go to Profile</Button>
+               </Link>
             </div>
           </div>
         )}

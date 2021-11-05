@@ -10,6 +10,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import ComboBox from './ComboBox';
 import BasicSelect from '../Selecting/Selecting';
+import {Link} from 'react-router-dom';
 
 export default function UpdateSem({ID,Maindata,DialogStatus,setDialogStatus,SemesterN,Degree,RegNo,getData,setSemesterN}) {
   const [open, setOpen] = React.useState(false);
