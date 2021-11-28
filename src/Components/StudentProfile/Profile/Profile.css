@@ -74,8 +74,8 @@ h2{
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 65px;
-    height: 65px;
+    width: 55px;
+    height: 55px;
     border-radius: 50px;
     cursor: pointer;
     transition: all .4s ease-in-out;
