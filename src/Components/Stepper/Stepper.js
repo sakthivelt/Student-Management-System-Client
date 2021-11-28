@@ -11,7 +11,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 import {Link} from 'react-router-dom'
-import { format, compareAsc } from 'date-fns'
+import { format } from 'date-fns'
+import {v4} from 'uuid';
 //material ui components
 import TextField from '@material-ui/core/TextField';
 import Avatar from '@material-ui/core/Avatar';
@@ -103,7 +104,7 @@ export default function HorizontalLinearStepper() {
   const [Animation,setAnimation]=useState(false)
   const [serverStatus,setServerStatus]=useState(true)
 
-  console.log(ImageRef.fullPath)
+  console.log(ImageRef)
 
   function datefun(){
     console.log(new Date())
@@ -237,10 +238,11 @@ const [progress, setProgress] = React.useState(0);
 function onChangeImage(e){
   if(e.target.files[0]){
     var file=e.target.files[0];
+    var FileID=v4()
     console.log(file)
     if(file.name.split('.').pop()==="jpg"||file.name.split('.').pop()==="jpeg"){
-      var ref=storage.ref('Students/'+file.name);
-      setImageRef(ref);
+      var ref=storage.ref('Students/'+file.name+FileID);
+      setImageRef('Students/'+file.name+FileID);
       var task=ref.put(file);
       
       task.on("state_changed",(snapshot)=>{
@@ -249,7 +251,7 @@ function onChangeImage(e){
       },(error)=>{
             alert(error)
       },()=>{
-        storage.ref("Students").child(file.name).getDownloadURL().then((res)=>{
+        storage.ref("Students").child(file.name+FileID).getDownloadURL().then((res)=>{
           console.log(res)
           setImage(res)
           setImageURL(res)
@@ -266,7 +268,7 @@ function onChangeImage(e){
 
 function deleteImage(){
   if(ImageRef){
-    var deleteRef=ImageRef.delete().then(()=>{
+    var deleteRef=storage.ref(ImageRef).delete().then(()=>{
       setImage("");
       setImageRef('')
       setImageURL('')
@@ -303,7 +305,7 @@ function FormSubmit(){
       BloodGroup:BloodGroup.toUpperCase(),
       PermenentAddress:PermenentAddress.toUpperCase(),
       ImageURL,
-      ImageRef:ImageRef.fullPath,
+      ImageRef:ImageRef,
               }).then((res)=>{
                 console.log(res )
                 setTimeout(()=>{

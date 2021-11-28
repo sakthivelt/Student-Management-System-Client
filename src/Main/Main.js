@@ -18,6 +18,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 //icons 
 import AddIcon from '@material-ui/icons/Add';
 import { ListItemIcon } from '@material-ui/core';
+import EventBusyIcon from '@mui/icons-material/EventBusy';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import BookIcon from '@material-ui/icons/Book';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -29,6 +30,7 @@ import StudentList from '../Components/StudentProfile/StudentList';
 import Profile from '../Components/StudentProfile/Profile/Profile';
 import Setting from '../Components/Setting/Setting'
 import StepperUpdate from '../Components/StepperUpdate/StepperUpdate'
+import Pending from '../Components/Pending/Pending'
 
 const drawerWidth = 240;
 
@@ -153,10 +155,10 @@ export default function MiniDrawer() {
         </div>
         <Divider />
         <List>
-          {[{value:"Create User",icon:<AddIcon/>,url:'/'},{value:"View Users",icon:<ListAltIcon/>,url:'/StudentList'},{value:"Settings",icon:<SettingsIcon/>,url:'/Settings'}].map((text, index) => (
-          <Link key={index} to={text.url}  style={{ color: 'gray',textDecoration:'none' }}>
+          {[{value:"Create Student",icon:<AddIcon/>,url:'/'},{value:"View Student",icon:<ListAltIcon/>,url:'/StudentList'},{value:"Pending List",icon:<EventBusyIcon/>,url:'/Pending'},{value:"Settings",icon:<SettingsIcon/>,url:'/Settings'}].map((text, index) => (
+          <Link  key={index} to={text.url}  style={{ color: 'gray',textDecoration:'none' }}>
             <ListItem button key={text.value} onClick={handleDrawerClose}>
-              <ListItemIcon>{text.icon}</ListItemIcon>
+              <ListItemIcon >{text.icon}</ListItemIcon>
               <ListItemText primary={text.value} />
             </ListItem>
           </Link>
@@ -177,10 +179,11 @@ export default function MiniDrawer() {
         <div className="main__render">
           <Switch>
             <Route path='/' exact component={Create}/>
-            <Route path='/Profiles/:RegNo' exect component={Profile}/>
-            <Route path='/Profile/Update/:RegNo/:Degree' exect component={ProfileUpdate}/>
-            <Route path='/StudentList' exect component={StudentList}/>
-            <Route path='/Settings' exect component={Setting}/>
+            <Route path='/Pending' exact component={Pending}/>
+            <Route path='/Profiles/:RegNo'  component={Profile}/>
+            <Route path='/Profile/Update/:RegNo/:Degree'  component={ProfileUpdate}/>
+            <Route path='/StudentList'  component={StudentList}/>
+            <Route path='/Settings'  component={Setting}/>
                     <div className='stepperUpdate'>
                     <Route path={`/Profile/:ID/:RegNo/Update`} exact component={StepperUpdate}/>
                     </div>
