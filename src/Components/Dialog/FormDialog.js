@@ -10,6 +10,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import ComboBox from '../ComboBox/ComboBox';
 import BasicSelect from '../Selecting/Selecting';
+import ResponsiveDatePicker from '../ResponsiveDatePicker/ResponsiveDatePicker';
 
 export default function FormDialog({DialogStatus,setDialogStatus,SemesterN,Degree,RegNo,setcallGetData,callGetData}) {
   const [open, setOpen] = React.useState(false);
@@ -57,12 +58,12 @@ export default function FormDialog({DialogStatus,setDialogStatus,SemesterN,Degre
         RegNo:RegNo.toUpperCase(),
         SubCode:SubCode,
         SubName:SubName,
-        Attempt1:{Mark:Attempt1Mark,Status:Attempt1Status},
-        Attempt2:{Mark:Attempt2Mark,Status:Attempt2Status},
-        Attempt3:{Mark:Attempt3Mark,Status:Attempt3Status},
-        Attempt4:{Mark:Attempt4Mark,Status:Attempt4Status},
-        Attempt5:{Mark:Attempt5Mark,Status:Attempt5Status},
-        Attempt6:{Mark:Attempt6Mark,Status:Attempt6Status}
+        Attempt1:{Mark:Attempt1Mark,Status:Attempt1Status,Date:Attempt1Date},
+        Attempt2:{Mark:Attempt2Mark,Status:Attempt2Status,Date:Attempt2Date},
+        Attempt3:{Mark:Attempt3Mark,Status:Attempt3Status,Date:Attempt3Date},
+        Attempt4:{Mark:Attempt4Mark,Status:Attempt4Status,Date:Attempt4Date},
+        Attempt5:{Mark:Attempt5Mark,Status:Attempt5Status,Date:Attempt5Date},
+        Attempt6:{Mark:Attempt6Mark,Status:Attempt6Status,Date:Attempt6Date}
       }).then(()=>{
         setcallGetData(!callGetData)
       }).catch((error)=>{alert(error)})
@@ -72,7 +73,7 @@ export default function FormDialog({DialogStatus,setDialogStatus,SemesterN,Degre
     <div >
       <Dialog open={open} onClose={handleClose} maxWidth={'xlg'} >
         <DialogTitle>{SemesterN}</DialogTitle>
-        <DialogContent style={{width:'1200px',height:"50vh"}}>
+        <DialogContent style={{width:'1200px',height:"65vh"}}>
             <div className="input__main" >
               <ComboBox selector={"SUBCODE"} lableName={"SUB CODE"} setitem={setSubCode}/>
               <ComboBox selector={"SUBNAME"} lableName={"SUB NAME"} setitem={setSubName}/>
@@ -81,31 +82,37 @@ export default function FormDialog({DialogStatus,setDialogStatus,SemesterN,Degre
               <div className="status" >
               <TextField id="standard-basic" label="Attempt 1 Mark" variant="standard" value={Attempt1Mark} onChange={(e)=>{setAttempt1Mark(e.target.value)}}/>              
               <BasicSelect setitem={setAttempt1Status}/>
+              <ResponsiveDatePicker setDate={setAttempt1Date} lable="Date"lable="Date"/>
               </div>
 
               <div className="status">
               <TextField disabled={Attempt1Status?true:false} id="standard-basic" label="Attempt 2 Mark" variant="standard" value={Attempt2Mark} onChange={(e)=>{setAttempt2Mark(e.target.value)}} />              
               <BasicSelect setdisabled={Attempt1Status?true:false} setitem={setAttempt2Status} />
+              <ResponsiveDatePicker setDate={setAttempt2Date} lable="Date" setdisable={Attempt1Status?true:false}/>
               </div>
               
               <div className="status">
               <TextField disabled={Attempt2Status?true:false} id="standard-basic" label="Attempt 3 Mark" variant="standard" value={Attempt3Mark} onChange={(e)=>{setAttempt3Mark(e.target.value)}} />              
               <BasicSelect setdisabled={Attempt2Status?true:false} setitem={setAttempt3Status}/>
+              <ResponsiveDatePicker setDate={setAttempt3Date} lable="Date" setdisable={Attempt2Status?true:false}/>
               </div>
               
               <div className="status">
               <TextField disabled={Attempt3Status?true:false} id="standard-basic" label="Attempt 4 Mark" variant="standard" value={Attempt4Mark} onChange={(e)=>{setAttempt4Mark(e.target.value)}}/>              
               <BasicSelect setdisabled={Attempt3Status?true:false} setitem={setAttempt4Status}/>
+              <ResponsiveDatePicker setDate={setAttempt4Date} lable="Date" setdisable={Attempt3Status?true:false}/>
               </div>
 
               {Degree==='UG'&&<div className="status">
               <TextField disabled={Attempt4Status?true:false} id="standard-basic" label="Attempt 5 Mark" variant="standard" value={Attempt5Mark} onChange={(e)=>{setAttempt5Mark(e.target.value)}}/>              
               <BasicSelect setdisabled={Attempt4Status?true:false} setitem={setAttempt5Status}/>
+              <ResponsiveDatePicker setDate={setAttempt5Date} lable="Date" setdisable={Attempt4Status?true:false}/>
               </div>}
 
               {Degree==="UG"&&<div className="status">
               <TextField disabled={Attempt5Status?true:false} id="standard-basic" label="Attempt 6 Mark" variant="standard" value={Attempt6Mark} onChange={(e)=>{setAttempt6Mark(e.target.value)}}/>              
               <BasicSelect setdisabled={Attempt5Status?true:false} setitem={setAttempt6Status}/>
+              <ResponsiveDatePicker setDate={setAttempt6Date} lable="Date" setdisable={Attempt5Status?true:false}/>
               </div>}
               
               </div>
