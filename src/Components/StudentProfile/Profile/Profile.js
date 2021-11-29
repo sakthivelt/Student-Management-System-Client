@@ -7,6 +7,7 @@ import Semester from './Semester/Semester'
 import Aos from 'aos';
 import "aos/dist/aos.css"
 import More from './More/More'
+import {storage} from '../../../FireBase/FireBase'
 //import material ui components
 import PersonIcon from '@mui/icons-material/Person';
 import ClearAllIcon from '@mui/icons-material/ClearAll';
@@ -83,14 +84,38 @@ function Profile() {
         }
     }
 
+    function deleteImage(RR){
+        console.log(RR)
+        var ref=storage.ref(RR)
+          ref.delete().then(()=>{
+                    return 1
+          }).catch((error)=>{console.log(error)
+            return 0
+        })    
+      }
+
     function deletefun(){
-        axios.delete(`${process.env.REACT_APP_UNSPLASH_URL}/delete/${UserData._id}`).then(()=>{
-            handleClose()
-            History.push('/StudentList')
-        }).catch((error)=>{
-            handleClose()
-            alert('Try Again !!')
-        })
+        if(UserData){
+            if(UserData.File10&&UserData.FileRef10){
+                deleteImage(UserData.FileRef10)
+            }
+            if(UserData.File11&&UserData.FileRef11){
+                deleteImage(UserData.FileRef11)
+            }
+            if(UserData.File12&&UserData.FileRef12){
+                deleteImage(UserData.FileRef12)
+            }
+            if(UserData.ImageRef&&UserData.ImageURL){
+                deleteImage(UserData.ImageRef)
+            }
+            axios.delete(`${process.env.REACT_APP_UNSPLASH_URL}/delete/${UserData._id}`).then(()=>{
+                handleClose()
+                History.push('/StudentList')
+            }).catch((error)=>{
+                handleClose()
+                alert('Try Again !!')
+            })
+        }
     }
 
     return (
