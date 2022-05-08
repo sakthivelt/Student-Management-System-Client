@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react'
+import React,{useEffect, useState,useRef} from 'react'
 import './Profile.css'
 import { useParams,useHistory,BrowserRouter as Router,Route,Link,Switch} from 'react-router-dom';
 import axios from 'axios';
@@ -7,6 +7,8 @@ import Semester from './Semester/Semester'
 import Aos from 'aos';
 import "aos/dist/aos.css"
 import More from './More/More'
+import {storage} from '../../../FireBase/FireBase'
+import {Report} from './More/Report/Report';
 //import material ui components
 import PersonIcon from '@mui/icons-material/Person';
 import ClearAllIcon from '@mui/icons-material/ClearAll';
@@ -17,8 +19,12 @@ import { isValid,format} from 'date-fns';
 import Backdrop from '@mui/material/Backdrop';
 import Button from '@mui/material/Button';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
+import DownloadIcon from '@mui/icons-material/Download';
 //Lottie Animation
 import Loader from '../../Lottie/Loader/Loader' 
+//react to print library
+import { useReactToPrint } from 'react-to-print';
 
 
 function Profile() {
@@ -30,6 +36,13 @@ function Profile() {
     const [Active2,setActive2]=useState(false);
     const [Active3,setActive3]=useState(false);
     const [Active4,setActive4]=useState(false);
+
+
+    //React to Print
+    const componentRef = useRef();
+        const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+        });
 
     //BackDrop start
     const [open, setOpen] = React.useState(false);
@@ -83,14 +96,38 @@ function Profile() {
         }
     }
 
+    function deleteImage(RR){
+        console.log(RR)
+        var ref=storage.ref(RR)
+          ref.delete().then(()=>{
+                    return 1
+          }).catch((error)=>{console.log(error)
+            return 0
+        })    
+      }
+
     function deletefun(){
-        axios.delete(`${process.env.REACT_APP_UNSPLASH_URL}/delete/${UserData._id}`).then(()=>{
-            handleClose()
-            History.push('/StudentList')
-        }).catch((error)=>{
-            handleClose()
-            alert('Try Again !!')
-        })
+        if(UserData){
+            if(UserData.File10&&UserData.FileRef10){
+                deleteImage(UserData.FileRef10)
+            }
+            if(UserData.File11&&UserData.FileRef11){
+                deleteImage(UserData.FileRef11)
+            }
+            if(UserData.File12&&UserData.FileRef12){
+                deleteImage(UserData.FileRef12)
+            }
+            if(UserData.ImageRef&&UserData.ImageURL){
+                deleteImage(UserData.ImageRef)
+            }
+            axios.delete(`${process.env.REACT_APP_UNSPLASH_URL}/delete/${UserData._id}`).then(()=>{
+                handleClose()
+                History.push('/StudentList')
+            }).catch((error)=>{
+                handleClose()
+                alert('Try Again !!')
+            })
+        }
     }
 
     return (
@@ -148,16 +185,42 @@ function Profile() {
                     </Route>
 
                     {/* Semester List */}
-                    <Route path={`/Profiles/${RegNo}/Sem`} exact>
+                    <Route path={`/Profiles/:RegNo/Sem`} exact>
                         <Semester UserData={UserData}/>
                     </Route>
-                    <Route path={`/Profiles/:RegNo/More`} >
+
+                    //Route for Upload files of student
+                    <Route path={`/Profiles/:RegNo/More/Upload`} >
                         <More UserData={UserData}/>
+                    </Route>
+
+                    //Route for Download Student reports
+                    <Route path={`/Profiles/:RegNo/More/Download`} >
+                        <div style={{width:'100%',height:'100%',overflowY:'scroll'}}>
+                            <Report ref={componentRef} pageStyle="@page { size: 2.5in 4in }" documentTitle={RegNo} UserData={UserData}/>
+                              <button onClick={handlePrint} style={{position:'fixed',bottom:'0',left:'0'}}>Print this out!</button>
+                        </div>
                     </Route>
                     {/* Update
                     <Route path={`/Profiles/${RegNo}/Update`} exact>
                         this is update
                     </Route> */}
+                    <Route path={`/Profiles/:RegNo/More`}>
+                            <div className="More">
+                                <Link to={`/Profiles/${RegNo}/More/Download`}>
+                                    <div className="more__items">
+                                    <DownloadIcon style={{width:"3rem",height:"3rem",color:"black"}}/>
+                                    <h3>Download Student Statement</h3>
+                                    </div>
+                                </Link>
+                                <Link to={`/Profiles/${RegNo}/More/Upload`}>
+                                    <div className="more__items">
+                                    <FileUploadIcon style={{width:"3rem",height:"3rem",color:"black"}}/>
+                                    <h3>Upload Documents</h3>
+                                    </div>
+                                </Link>
+                            </div>
+                    </Route>
                 </Switch>                    
             </div>
 

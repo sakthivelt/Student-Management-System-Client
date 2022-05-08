@@ -6,6 +6,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { isValid,format} from 'date-fns';
+
 
 function PendingTable(Prop) {
 
@@ -20,12 +22,12 @@ function PendingTable(Prop) {
           if(Prop.PendingData){
             let data=Prop.PendingData.map((item)=>{
                 return  createData(item.SubCode,item.SubName,
-                  (item.Attempt1.Mark===""&&item.Attempt1.Status===true)?" ":`${item.Attempt1.Mark} / ${item.Attempt1.Status===true?"P":"F"}`,
-                  (item.Attempt2.Mark===""&&item.Attempt2.Status===true)?" ":`${item.Attempt2.Mark} / ${item.Attempt2.Status===true?"P":"F"}`,
-                  (item.Attempt3.Mark===""&&item.Attempt3.Status===true)?" ":`${item.Attempt3.Mark} / ${item.Attempt3.Status===true?"P":"F"}`,
-                  (item.Attempt4.Mark===""&&item.Attempt4.Status===true)?" ":`${item.Attempt4.Mark} / ${item.Attempt4.Status===true?"P":"F"}`,
-                  (item.Attempt5.Mark===""&&item.Attempt5.Status===true)?" ":`${item.Attempt5.Mark} / ${item.Attempt5.Status===true?"P":"F"}`,
-                  (item.Attempt6.Mark===""&&item.Attempt6.Status===true)?" ":`${item.Attempt6.Mark} / ${item.Attempt6.Status===true?"P":"F"}`)
+                  (item.Attempt1.Mark===""&&item.Attempt1.Status===true)?" ":`${item.Attempt1.Mark} / ${item.Attempt1.Status===true?"P":"F"} ${isValid(new Date(item.Attempt1.Date))&&format(new Date(item.Attempt1.Date),'dd/MM')}`,
+                  (item.Attempt2.Mark===""&&item.Attempt2.Status===true)?" ":`${item.Attempt2.Mark} / ${item.Attempt2.Status===true?"P":"F"} ${isValid(new Date(item.Attempt2.Date))&&format(new Date(item.Attempt2.Date),'dd/MM')}`,
+                  (item.Attempt3.Mark===""&&item.Attempt3.Status===true)?" ":`${item.Attempt3.Mark} / ${item.Attempt3.Status===true?"P":"F"} ${isValid(new Date(item.Attempt3.Date))&&format(new Date(item.Attempt3.Date),'dd/MM')}`,
+                  (item.Attempt4.Mark===""&&item.Attempt4.Status===true)?" ":`${item.Attempt4.Mark} / ${item.Attempt4.Status===true?"P":"F"} ${isValid(new Date(item.Attempt4.Date))&&format(new Date(item.Attempt4.Date),'dd/MM')}`,
+                  (item.Attempt5.Mark===""&&item.Attempt5.Status===true)?" ":`${item.Attempt5.Mark} / ${item.Attempt5.Status===true?"P":"F"} ${isValid(new Date(item.Attempt5.Date))&&format(new Date(item.Attempt5.Date),'dd/MM')}`,
+                  (item.Attempt6.Mark===""&&item.Attempt6.Status===true)?" ":`${item.Attempt6.Mark} / ${item.Attempt6.Status===true?"P":"F"} ${isValid(new Date(item.Attempt6.Date))&&format(new Date(item.Attempt6.Date),'dd/MM')}`)
               })
               setrows(data)
               console.log(data)

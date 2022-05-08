@@ -184,9 +184,9 @@ export default function MiniDrawer() {
             <Route path='/Profile/Update/:RegNo/:Degree'  component={ProfileUpdate}/>
             <Route path='/StudentList'  component={StudentList}/>
             <Route path='/Settings'  component={Setting}/>
-                    <div className='stepperUpdate'>
-                    <Route path={`/Profile/:ID/:RegNo/Update`} exact component={StepperUpdate}/>
-                    </div>
+            <div className='stepperUpdate'>
+            <Route path={`/Profile/:ID/:RegNo/Update`} exact component={StepperUpdate}/>
+            </div>
           </Switch>
         </div>
       </main>
