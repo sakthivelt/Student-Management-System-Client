@@ -2,7 +2,7 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/storage'
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDqGQj4PMieBzMasfNL9fLVRzGRSDmOHOw",
+    apiKey: "API Key",
     authDomain: "studentform-sakthi.firebaseapp.com",
     projectId: "studentform-sakthi",
     storageBucket: "studentform-sakthi.appspot.com",
