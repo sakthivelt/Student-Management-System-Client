@@ -4,7 +4,13 @@ Student Management System is a web application designed to manage student data. 
 
 ## Demo
 
-Check out the live demo: [Student Management System Demo](#)
+under service right now !
+
+## Table of Contents
+
+- [Features](#features)
+- [Installation](#installation)
+- [License](#license)
 
 ## Features
 
@@ -15,3 +21,25 @@ Check out the live demo: [Student Management System Demo](#)
 - **Node.js and Express**: Utilizes Node.js 🚀 and Express for the server-side logic and API endpoints.
 
 - **MongoDB**: Stores and manages data using MongoDB 📊, providing a scalable and efficient database solution.
+
+## Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/sakthivelt/Student-Management-System-Client.git
+   cd student-management-system-Client
+   ```
+
+2. Install dependencies:
+  ```bash
+  npm install
+  npm start  
+  ```
+
+## License
+
+  This project is licensed under the MIT License - see the LICENSE file for details.
+
+
+   
