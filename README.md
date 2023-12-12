@@ -32,10 +32,10 @@ under service right now !
    ```
 
 2. Install dependencies:
-  ```bash
-     npm install
-     npm start  
-  ```
+     ```bash
+  npm install
+  npm start  
+     ```
 
 ## License
 
